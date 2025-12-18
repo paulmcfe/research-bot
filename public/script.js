@@ -3,8 +3,10 @@
  * Handles user input, API communication, and message rendering
  */
 
-// Configuration - use relative URL for both local and production
-const API_CHAT_ENDPOINT = '/api/chat';
+// Configuration - detect environment and set API URL accordingly
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_BASE = isLocalhost ? 'http://localhost:8000' : '';
+const API_CHAT_ENDPOINT = `${API_BASE}/api/chat`;
 
 // DOM Elements
 const chatContainer = document.getElementById('chatContainer');

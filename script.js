@@ -3,9 +3,8 @@
  * Handles user input, API communication, and message rendering
  */
 
-// Configuration
-const API_BASE_URL = 'http://localhost:8000';
-const API_CHAT_ENDPOINT = `${API_BASE_URL}/api/chat`;
+// Configuration - use relative URL for both local and production
+const API_CHAT_ENDPOINT = '/api/chat';
 
 // DOM Elements
 const chatContainer = document.getElementById('chatContainer');
@@ -407,7 +406,7 @@ async function sendMessage(message) {
         // Show user-friendly error message
         let errorMessage = 'Something went wrong. Please try again.';
         if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-            errorMessage = 'Unable to connect to the server. Make sure the backend is running at ' + API_BASE_URL;
+            errorMessage = 'Unable to connect to the server. Please check your connection.';
         } else if (error.message) {
             errorMessage = error.message;
         }

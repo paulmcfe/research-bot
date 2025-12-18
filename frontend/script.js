@@ -76,7 +76,8 @@ function handleKeyDown(event) {
     // Submit on Enter (without Shift)
     if (event.key === 'Enter' && !event.shiftKey) {
         event.preventDefault();
-        chatForm.dispatchEvent(new Event('submit'));
+        // Use requestSubmit() to properly trigger form submission with validation
+        chatForm.requestSubmit();
     }
 }
 

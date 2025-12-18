@@ -82,68 +82,185 @@ function handleKeyDown(event) {
 }
 
 /**
- * Simple markdown parser for AI responses
- * Handles: code blocks, inline code, bold, italic, headers, lists, links
+ * Escape HTML to prevent XSS
+ * @param {string} text - Raw text
+ * @returns {string} Escaped text
+ */
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
+/**
+ * Apply inline formatting (bold, italic, code, links)
+ * @param {string} text - Text to format
+ * @returns {string} Formatted HTML
+ */
+function applyInlineFormatting(text) {
+    let result = escapeHtml(text);
+    
+    // Inline code (` ... `)
+    result = result.replace(/`([^`]+)`/g, '<code>$1</code>');
+    
+    // Bold (**text** or __text__)
+    result = result.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    result = result.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+    
+    // Italic (*text* or _text_) - be careful not to match inside words
+    result = result.replace(/(?<!\w)\*([^*]+)\*(?!\w)/g, '<em>$1</em>');
+    result = result.replace(/(?<!\w)_([^_]+)_(?!\w)/g, '<em>$1</em>');
+    
+    // Links [text](url)
+    result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    
+    return result;
+}
+
+/**
+ * Parse markdown text into HTML with proper structure
+ * Handles: code blocks, headers, nested lists, paragraphs, inline formatting
  * @param {string} text - Raw markdown text
  * @returns {string} HTML string
  */
 function parseMarkdown(text) {
-    // Escape HTML to prevent XSS
-    let html = text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+    const lines = text.split('\n');
+    const result = [];
+    let inCodeBlock = false;
+    let codeBlockLang = '';
+    let codeBlockContent = [];
+    let listStack = []; // Track nested list levels
     
-    // Code blocks (``` ... ```)
-    html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (match, lang, code) => {
-        return `<pre><code class="language-${lang}">${code.trim()}</code></pre>`;
-    });
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // Handle fenced code blocks (``` ... ```)
+        if (line.trim().startsWith('```')) {
+            if (!inCodeBlock) {
+                // Start code block
+                inCodeBlock = true;
+                codeBlockLang = line.trim().slice(3).trim();
+                codeBlockContent = [];
+            } else {
+                // End code block
+                inCodeBlock = false;
+                closeAllLists(result, listStack);
+                result.push(`<pre><code class="language-${codeBlockLang}">${escapeHtml(codeBlockContent.join('\n'))}</code></pre>`);
+                codeBlockContent = [];
+                codeBlockLang = '';
+            }
+            continue;
+        }
+        
+        if (inCodeBlock) {
+            codeBlockContent.push(line);
+            continue;
+        }
+        
+        // Empty line - close lists and add paragraph break
+        if (line.trim() === '') {
+            closeAllLists(result, listStack);
+            continue;
+        }
+        
+        // Headers (# ## ### ####)
+        const headerMatch = line.match(/^(#{1,4})\s+(.+)$/);
+        if (headerMatch) {
+            closeAllLists(result, listStack);
+            const level = headerMatch[1].length + 1; // h2, h3, h4, h5
+            result.push(`<h${level}>${applyInlineFormatting(headerMatch[2])}</h${level}>`);
+            continue;
+        }
+        
+        // List items - detect indent level
+        const listMatch = line.match(/^(\s*)[-*•]\s+(.+)$/);
+        if (listMatch) {
+            const indent = listMatch[1].length;
+            const content = listMatch[2];
+            const level = Math.floor(indent / 2); // 2 spaces = 1 level, 4 spaces = 2 levels
+            
+            // Adjust list nesting
+            while (listStack.length > level + 1) {
+                result.push('</li></ul>');
+                listStack.pop();
+            }
+            
+            if (listStack.length === level + 1) {
+                // Same level - close previous item
+                result.push('</li>');
+            } else if (listStack.length < level + 1) {
+                // Deeper level - open new nested list
+                while (listStack.length < level + 1) {
+                    result.push('<ul>');
+                    listStack.push('ul');
+                }
+            }
+            
+            result.push(`<li>${applyInlineFormatting(content)}`);
+            continue;
+        }
+        
+        // Numbered list items
+        const numListMatch = line.match(/^(\s*)(\d+)\.\s+(.+)$/);
+        if (numListMatch) {
+            const indent = numListMatch[1].length;
+            const content = numListMatch[3];
+            const level = Math.floor(indent / 2);
+            
+            while (listStack.length > level + 1) {
+                const tag = listStack.pop();
+                result.push(`</li></${tag}>`);
+            }
+            
+            if (listStack.length === level + 1) {
+                result.push('</li>');
+            } else if (listStack.length < level + 1) {
+                while (listStack.length < level + 1) {
+                    result.push('<ol>');
+                    listStack.push('ol');
+                }
+            }
+            
+            result.push(`<li>${applyInlineFormatting(content)}`);
+            continue;
+        }
+        
+        // Indented content (4+ spaces) - treat as part of previous item or code
+        if (line.match(/^\s{4,}/) && listStack.length > 0) {
+            result.push(`<br>${applyInlineFormatting(line.trim())}`);
+            continue;
+        }
+        
+        // Regular paragraph text
+        closeAllLists(result, listStack);
+        result.push(`<p>${applyInlineFormatting(line)}</p>`);
+    }
     
-    // Inline code (` ... `)
-    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+    // Close any remaining open elements
+    if (inCodeBlock) {
+        result.push(`<pre><code class="language-${codeBlockLang}">${escapeHtml(codeBlockContent.join('\n'))}</code></pre>`);
+    }
+    closeAllLists(result, listStack);
     
-    // Bold (**text** or __text__)
-    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/__([^_]+)__/g, '<strong>$1</strong>');
-    
-    // Italic (*text* or _text_)
-    html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-    html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
-    
-    // Headers (# ## ###)
-    html = html.replace(/^### (.+)$/gm, '<h4>$1</h4>');
-    html = html.replace(/^## (.+)$/gm, '<h3>$1</h3>');
-    html = html.replace(/^# (.+)$/gm, '<h2>$1</h2>');
-    
-    // Unordered lists (- item)
-    html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
-    html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
-    
-    // Numbered lists (1. item)
-    html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
-    
-    // Links [text](url)
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-    
-    // Paragraphs (double newlines)
-    html = html.replace(/\n\n+/g, '</p><p>');
-    
-    // Single line breaks
-    html = html.replace(/\n/g, '<br>');
-    
-    // Wrap in paragraph tags
-    html = '<p>' + html + '</p>';
-    
-    // Clean up empty paragraphs
+    // Clean up consecutive paragraph tags
+    let html = result.join('\n');
+    html = html.replace(/<\/p>\n<p>/g, '</p><p>');
     html = html.replace(/<p><\/p>/g, '');
-    html = html.replace(/<p>(<h[234]>)/g, '$1');
-    html = html.replace(/(<\/h[234]>)<\/p>/g, '$1');
-    html = html.replace(/<p>(<pre>)/g, '$1');
-    html = html.replace(/(<\/pre>)<\/p>/g, '$1');
-    html = html.replace(/<p>(<ul>)/g, '$1');
-    html = html.replace(/(<\/ul>)<\/p>/g, '$1');
     
     return html;
+}
+
+/**
+ * Close all open list elements
+ * @param {string[]} result - Result array to append closing tags to
+ * @param {string[]} listStack - Stack of open list types
+ */
+function closeAllLists(result, listStack) {
+    while (listStack.length > 0) {
+        const tag = listStack.pop();
+        result.push(`</li></${tag}>`);
+    }
 }
 
 /**

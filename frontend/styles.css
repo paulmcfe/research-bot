@@ -217,11 +217,48 @@ body {
 .message.ai .message-content ul,
 .message.ai .message-content ol {
     margin: 0.5rem 0;
-    padding-left: 1.5rem;
+    padding-left: 1.25rem;
 }
 
 .message.ai .message-content li {
+    margin: 0.35rem 0;
+    line-height: 1.5;
+}
+
+/* Nested lists */
+.message.ai .message-content ul ul,
+.message.ai .message-content ol ol,
+.message.ai .message-content ul ol,
+.message.ai .message-content ol ul {
     margin: 0.25rem 0;
+    padding-left: 1.25rem;
+}
+
+.message.ai .message-content li > ul,
+.message.ai .message-content li > ol {
+    margin-top: 0.25rem;
+}
+
+/* Different bullet styles for nested levels */
+.message.ai .message-content ul {
+    list-style-type: disc;
+}
+
+.message.ai .message-content ul ul {
+    list-style-type: circle;
+}
+
+.message.ai .message-content ul ul ul {
+    list-style-type: square;
+}
+
+/* Numbered list styling */
+.message.ai .message-content ol {
+    list-style-type: decimal;
+}
+
+.message.ai .message-content ol ol {
+    list-style-type: lower-alpha;
 }
 
 .message.ai .message-content strong {

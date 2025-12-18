@@ -1,0 +1,401 @@
+/* CSS Variables - Dark Theme from project rules */
+:root {
+    --primary: hsl(217 91% 60%);
+    --primary-hover: hsl(217 91% 50%);
+    --background: hsl(215 28% 17%);
+    --background-light: hsl(215 25% 22%);
+    --background-lighter: hsl(215 22% 27%);
+    --text: hsl(210 20% 98%);
+    --text-muted: hsl(210 15% 70%);
+    --accent: hsl(160 84% 39%);
+    --accent-hover: hsl(160 84% 32%);
+    --user-bubble: hsl(217 91% 60%);
+    --ai-bubble: hsl(215 25% 25%);
+    --border: hsl(215 20% 30%);
+    --shadow: hsla(0 0% 0% / 0.3);
+}
+
+/* Reset and Base Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+/* Accessibility - Screen reader only content */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* App Container - Full viewport layout */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    max-width: 900px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, var(--background) 0%, hsl(215 30% 14%) 100%);
+}
+
+/* Header Styles */
+.header {
+    padding: 1.25rem 1.5rem;
+    background: var(--background-light);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.logo-icon {
+    width: 2rem;
+    height: 2rem;
+    color: var(--accent);
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tagline {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* Chat Container - Scrollable message area */
+.chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    scroll-behavior: smooth;
+}
+
+/* Welcome Message */
+.welcome-message {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-muted);
+    margin: auto 0;
+}
+
+.welcome-message h2 {
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+}
+
+.welcome-message p {
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* Message Bubbles */
+.message {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message-content {
+    padding: 0.875rem 1.125rem;
+    border-radius: 1.25rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* User Messages - Right aligned, blue */
+.message.user {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.message.user .message-content {
+    background: var(--user-bubble);
+    color: var(--text);
+    border-bottom-right-radius: 0.25rem;
+}
+
+.message.user .message-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    padding-right: 0.5rem;
+}
+
+/* AI Messages - Left aligned, dark gray */
+.message.ai {
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.message.ai .message-content {
+    background: var(--ai-bubble);
+    color: var(--text);
+    border-bottom-left-radius: 0.25rem;
+    border: 1px solid var(--border);
+}
+
+.message.ai .message-label {
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    font-weight: 500;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.125rem;
+    background: var(--ai-bubble);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    border-bottom-left-radius: 0.25rem;
+    color: var(--text-muted);
+}
+
+.loading-dots {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.loading-dots span {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.4;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Input Container */
+.input-container {
+    padding: 1rem 1.5rem 1.5rem;
+    background: var(--background-light);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.input-form {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-end;
+    background: var(--background-lighter);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 1.25rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-form:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px hsla(217 91% 60% / 0.2);
+}
+
+.message-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: inherit;
+    line-height: 1.5;
+    resize: none;
+    min-height: 1.5rem;
+    max-height: 150px;
+    padding: 0.5rem 0;
+}
+
+.message-input::placeholder {
+    color: var(--text-muted);
+}
+
+.message-input:focus {
+    outline: none;
+}
+
+.send-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    flex-shrink: 0;
+}
+
+.send-button:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+.send-button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.send-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.send-button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--text);
+}
+
+/* Error Message */
+.error-message {
+    background: hsla(0 70% 50% / 0.15);
+    border: 1px solid hsl(0 70% 50%);
+    color: hsl(0 70% 70%);
+    padding: 0.875rem 1.125rem;
+    border-radius: 0.75rem;
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Scrollbar Styling */
+.chat-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .header {
+        padding: 1rem;
+    }
+
+    .logo h1 {
+        font-size: 1.25rem;
+    }
+
+    .logo-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .chat-container {
+        padding: 1rem;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+
+    .input-container {
+        padding: 0.75rem 1rem 1rem;
+    }
+
+    .welcome-message {
+        padding: 2rem 1rem;
+    }
+
+    .welcome-message h2 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Focus Styles for Accessibility */
+.send-button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+

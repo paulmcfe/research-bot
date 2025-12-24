@@ -1,0 +1,128 @@
+VAPOR LABS ALL-HANDS MEETING NOTES
+June 15, 1999
+Location: Main Conference Room + Overflow to Kitchen
+Attendees: All Hands (~65 employees)
+Notes by: Sarah Chen, Executive Assistant
+
+---
+
+OPENING REMARKS - Marcus Chen, CEO
+
+Marcus opened by celebrating our incredible momentum. "When I started 
+this company five months ago, there were four of us in a garage. Today, 
+there are 65 of us in a 15,000 square foot office. That's not just 
+growth—that's destiny."
+
+He reviewed the Series A close ($12M from Sequoia, Kleiner) and 
+confirmed we're now in active discussions for Series B. "The investors 
+see what we see: VaporWare is going to change everything."
+
+Marcus announced we've hit 50 engineers and expects to reach 100 by 
+end of summer. "Hire fast, hire smart, hire relentlessly."
+
+---
+
+PRODUCT UPDATE - Diana Reeves, CTO
+
+Diana presented the VaporWare technical architecture. Key points:
+- Built on Java for portability
+- Oracle database backend
+- CORBA for component communication
+- Targeting enterprise middleware market
+
+Diana showed an early demo of Vapor Connect transforming data between 
+SAP and a web application. The demo mostly worked, though there was a 
+brief crash that Diana handled gracefully ("That's why it's an alpha!").
+
+Timeline: Alpha in Q3, Beta in Q4, 1.0 in Q1 2000.
+
+Question from audience: "Will we support Windows?"
+Diana: "Our customers run Solaris. Windows is not a priority."
+
+---
+
+BUSINESS DEVELOPMENT UPDATE - Jordan Blake, VP BD
+
+Jordan announced three major partnership discussions:
+- Oracle: Deep integration partnership (NDA pending)
+- Sun Microsystems: Potential co-marketing arrangement
+- Cisco: Exploring bundling with network infrastructure
+
+"These are Fortune 50 companies validating our vision," Jordan said. 
+"This is what world-class business development looks like."
+
+Jordan also noted we've received 47 inbound inquiries from enterprises 
+interested in VaporWare beta. "The demand is real. We just need to 
+build the product fast enough."
+
+---
+
+MARKETING UPDATE - Rachel Torres, VP Marketing
+
+Rachel presented the new brand guidelines. Key changes:
+- New logo (the "vapor cloud" design we voted on)
+- Updated color palette (blues and teals for trust/technology)
+- New tagline: "The Operating System for the Networked Economy"
+
+She announced we'll have a major presence at Internet World in 
+September. "We're taking the biggest booth in the startup pavilion. 
+When VaporWare launches, everyone will know."
+
+Website relaunch planned for end of month.
+
+---
+
+HR UPDATE - Jennifer Williams, Head of HR
+
+Jennifer reviewed the new benefits package:
+- Health, dental, vision (100% covered)
+- 401(k) with 4% match
+- Unlimited PTO (but please don't abuse it)
+- Gym membership at 24 Hour Fitness
+- Twice-weekly catered lunches
+- Monthly team events
+
+Stock options: All employees receive options. Current 409A valuation 
+is $0.50/share, expected to increase significantly after Series B.
+
+Jennifer reminded everyone about the employee referral bonus: $5,000 
+for each hire that makes it through the trial period.
+
+---
+
+Q&A
+
+Q: When do we expect to be profitable?
+Marcus: Profitability is not the goal right now. Growth is the goal. 
+We're investing every dollar into building the future. Profitability 
+will come when we own the market.
+
+Q: Are we going public?
+Marcus: Can't comment on that specifically, but I'll say the IPO 
+market for internet companies has never been hotter. Draw your own 
+conclusions.
+
+Q: The office is getting crowded. Are we expanding?
+Jordan: Yes, we're looking at the floor above us. Should have an 
+answer by end of month.
+
+Q: Can we get better coffee?
+Marcus: (laughs) We just raised $12 million and you're asking about 
+coffee? Fine. Jennifer, make it happen. Get the good stuff.
+
+---
+
+CLOSING
+
+Marcus closed with a rally cry: "We're building something that matters. 
+Every line of code, every sales call, every customer conversation—it 
+all adds up. We're not just a startup. We're a movement. Let's crush 
+the second half of the year!"
+
+Applause. Meeting ended at 11:45 AM.
+
+Next All-Hands: July 20, 1999
+
+---
+Sarah Chen
+Executive Assistant to the CEO

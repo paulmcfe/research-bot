@@ -1,31 +1,19 @@
-# ResearchBot v6 - FastAPI Backend
+# ResearchBot v4 - FastAPI Backend
 
-from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
+import os
 from dotenv import load_dotenv
 from researchbot import ResearchBot
 
 load_dotenv()
 
-# Initialize ResearchBot v6
-bot = ResearchBot()
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Index documents automatically at startup."""
-    chunks = bot.index_documents("./documents")
-    print(f"✓ Indexed {chunks} chunks from ./documents at startup")
-    yield
-
 app = FastAPI(
     title="ResearchBot API",
     description="Agentic RAG-powered research assistant",
-    version="6.0.0",
-    lifespan=lifespan
+    version="4.0.0"
 )
 
 app.add_middleware(
@@ -34,6 +22,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+# Initialize ResearchBot v4 once at startup
+bot = ResearchBot()
 
 
 # ============================================================================
@@ -46,7 +37,7 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     reply: str
-    version: str = "6.0"
+    version: str = "4.0"
 
 
 class IndexRequest(BaseModel):
@@ -75,8 +66,8 @@ def root():
     """Health check endpoint."""
     return {
         "status": "ok",
-        "version": "6.0",
-        "description": "ResearchBot v6 - Multi-Agent RAG with LangGraph Supervisor"
+        "version": "4.0",
+        "description": "ResearchBot v4 - Agentic RAG with LangGraph"
     }
 
 
@@ -85,7 +76,7 @@ def chat(request: ChatRequest):
     """
     Send a research query to ResearchBot.
     
-    ResearchBot v6 uses a multi-agent pipeline with:
+    ResearchBot v4 uses an agentic RAG pipeline with:
     - Query planning and decomposition
     - Dynamic retrieval from the knowledge base
     - Multi-source synthesis with citations
@@ -93,7 +84,7 @@ def chat(request: ChatRequest):
     """
     try:
         response = bot.research(request.message)
-        return {"reply": response, "version": "6.0"}
+        return {"reply": response, "version": "4.0"}
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -106,11 +97,11 @@ def index_documents(request: IndexRequest):
     """
     Index documents from a directory into ResearchBot's knowledge base.
     
-    Supports .txt files by default. Documents are chunked
+    Supports .txt and .md files by default. Documents are chunked
     and embedded for semantic search.
     """
     try:
-        extensions = request.extensions or [".txt"]
+        extensions = request.extensions or [".txt", ".md"]
         chunks_indexed = bot.index_documents(request.directory, extensions)
         return {
             "status": "indexed",
@@ -129,7 +120,7 @@ def health_check():
     """Detailed health check for ResearchBot v3."""
     return {
         "status": "healthy",
-        "version": "6.0",
+        "version": "4.0",
         "features": [
             "Query planning and decomposition",
             "Dynamic retrieval strategies",

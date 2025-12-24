@@ -1,11 +1,10 @@
-# ResearchBot v6
+# ResearchBot v5
 
-A multi-agent research assistant built with LangChain 1.0 and LangGraph Supervisor that helps you find and synthesize information from your document collection using coordinated specialist agents with persistent memory.
+A multi-agent research assistant built with LangChain 1.0 and LangGraph Supervisor that helps you find and synthesize information from your document collection using coordinated specialist agents.
 
 ## Features
 
 - **Multi-Agent Architecture**: Coordinated team of specialist agents using the Supervisor pattern
-- **Native Memory**: Remembers user research interests, preferences, and conversation context across sessions
 - **Query Analysis**: Dedicated agent for analyzing queries and creating research plans
 - **Document Research**: Specialized agent for searching the knowledge base
 - **Report Writing**: Focused agent for synthesizing findings into coherent responses
@@ -17,9 +16,9 @@ A multi-agent research assistant built with LangChain 1.0 and LangGraph Supervis
 
 ## Architecture
 
-ResearchBot v6 uses a **LangGraph Supervisor** pattern with four coordinated agents and native memory:
+ResearchBot v5 uses a **LangGraph Supervisor** pattern with four coordinated agents:
 
-1. **Research Coordinator** (Supervisor): Receives queries, coordinates specialists, manages memory, delivers responses
+1. **Research Coordinator** (Supervisor): Receives queries, coordinates specialists, delivers responses
 2. **Query Analyst** (Worker): Analyzes questions and creates focused research plans
 3. **Document Researcher** (Worker): Searches the knowledge base using the `search_documents` tool
 4. **Report Writer** (Worker): Synthesizes findings into clear, cited responses
@@ -29,9 +28,7 @@ ResearchBot v6 uses a **LangGraph Supervisor** pattern with four coordinated age
 - **LLM**: OpenAI GPT-5-nano (fast, cost-efficient reasoning model)
 - **Embeddings**: OpenAI text-embedding-3-small
 - **Vector Database**: Qdrant (in-memory for development)
-- **Memory Store**: LangGraph InMemoryStore with semantic search
 - **Multi-Agent**: langgraph-supervisor for agent coordination
-- **Memory Tools**: langmem for memory management
 
 ## Prerequisites
 
@@ -195,7 +192,7 @@ research-bot/
 
 ### Multi-Agent Pipeline
 
-ResearchBot v6 processes queries through a coordinated multi-agent workflow:
+ResearchBot v5 processes queries through a coordinated multi-agent workflow:
 
 1. **Research Coordinator** (Supervisor)
    - Receives the user's research question
@@ -238,7 +235,6 @@ Key dependencies (see [pyproject.toml](pyproject.toml) for full list):
 - `langchain>=0.3.0` - LangChain 1.0 framework
 - `langgraph>=0.2.0` - Graph-based agent orchestration
 - `langgraph-supervisor>=0.0.30` - Multi-agent supervisor pattern
-- `langmem>=0.0.30` - Memory management tools
 - `langchain-openai>=0.2.0` - OpenAI integration
 - `langchain-qdrant>=0.2.0` - Qdrant vector store
 - `langchain-text-splitters>=0.3.0` - Document splitting

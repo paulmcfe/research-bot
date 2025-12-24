@@ -1,0 +1,145 @@
+VAPOR LABS EXECUTIVE TEAM MEETING
+March 8, 2000
+Location: Executive Conference Room
+Attendees: Marcus Chen (CEO), Diana Reeves (CTO), Jordan Blake (VP BD),
+Rachel Torres (VP Marketing), David Park (CFO), Steve Morrison (VP Sales),
+Tyler Morrison (VP Consumer), Kevin Park (VP Engineering)
+Notes by: Sarah Chen (confidential)
+
+---
+
+MARCUS: Let's skip the small talk. We have a problem. The Nasdaq 
+crashed 4% yesterday. Tech stocks are getting murdered. Pets.com is 
+down 60%. Webvan is down 50%. The party's over.
+
+DAVID (CFO): I've been running scenarios. At our current burn rate of 
+$5 million per month, we have 18 months of runway. But that assumes 
+we hit revenue targets, which—Steve?
+
+STEVE (Sales): March is going to miss. Two deals pushed to Q2. One 
+customer is asking to renegotiate. Pipeline is slowing.
+
+MARCUS: How bad?
+
+STEVE: We're tracking to $800K for Q1 against a $2M target.
+
+JORDAN: Jesus.
+
+MARCUS: What about the partnerships? Oracle? Sun?
+
+JORDAN: Oracle deal is in legal review—should close in April. Sun is 
+pausing "pending market conditions." Cisco went dark.
+
+RACHEL (Marketing): The Super Bowl ad did its job. We got awareness. 
+But converting awareness to sales is Steve's problem.
+
+STEVE: That's not fair. You can't generate demand with brand ads. I 
+told you we needed demand gen campaigns.
+
+RACHEL: We had a $30 million budget. We used it according to the plan 
+everyone approved.
+
+MARCUS: Stop. The blame game doesn't help. Where are we on product?
+
+DIANA (CTO): Enterprise is behind. We're not going to hit Q1. I've been 
+saying this for months. Q2 is realistic if we cut scope.
+
+TYLER (Consumer): Personal is actually on track. We could launch beta 
+in April.
+
+DIANA: Tyler, with respect, the consumer platform was built on top of 
+enterprise infrastructure that isn't stable. If you launch beta and it 
+falls over, we look worse than if we wait.
+
+TYLER: We can't keep waiting. The market window is closing.
+
+DIANA: What market window? The consumer internet is imploding.
+
+TYLER: Users don't care about the stock market. They want cool stuff.
+
+DIANA: Cool stuff that loads in 30 seconds because of your Java 
+Applets?
+
+MARCUS: Enough. Diana, Tyler, we'll discuss product offline. David, 
+what are our options?
+
+DAVID: Three scenarios.
+
+Scenario A - Stay the course. Keep burn at $5M, hope revenue catches 
+up. Risk: We run out of cash in 18 months if it doesn't.
+
+Scenario B - Moderate cuts. Reduce burn to $3.5M. Delay some hiring, 
+reduce marketing spend, cut contractors. Extends runway to 24 months.
+
+Scenario C - Deep cuts. Reduce burn to $2.5M. Layoffs, office closures, 
+focus on enterprise only. Extends runway to 30+ months.
+
+MARCUS: What does Scenario C look like in terms of headcount?
+
+DAVID: We're at 310 people. Scenario C means getting to around 180.
+
+RACHEL: That's a third of the company.
+
+DAVID: Yes.
+
+MARCUS: We're not doing Scenario C. Not yet. But we should plan for 
+Scenario B starting now.
+
+JORDAN: What does that mean for my BD team?
+
+DAVID: You lose 2 of your 8 people. And the London office doesn't open.
+
+JORDAN: London is critical for—
+
+MARCUS: Jordan. Market conditions have changed. We need to conserve 
+cash.
+
+JORDAN: (silence)
+
+MARCUS: Rachel, how much can you cut from marketing?
+
+RACHEL: VaporCon is $3M. We could postpone it. Print campaigns are $2M 
+—I can pause those. That's $5M in savings.
+
+MARCUS: Do it. What about demand gen? Steve says he needs it.
+
+RACHEL: Demand gen is $4M. That's where the leads come from.
+
+STEVE: If you cut demand gen, I can't hit targets.
+
+RACHEL: You're already not hitting targets.
+
+STEVE: With no air cover! You spent everything on brand!
+
+MARCUS: STOP.
+
+(Long silence)
+
+MARCUS: Here's what we're doing. Scenario B. Effective immediately. 
+Diana, you have until June to ship Enterprise 1.0. Cut whatever scope 
+necessary. Tyler, Consumer beta is on hold until Enterprise ships. 
+Steve, reset your targets. I want a realistic number that you can 
+actually hit. Rachel, cut $5M from the marketing budget and reallocate 
+$2M to demand gen. Jordan, no London office. Keep the 6 people you 
+need, move the rest to Steve's team.
+
+David, I want weekly burn reports from now on.
+
+Everyone, this stays in this room. The last thing we need is a morale 
+crisis. We tell the team we're being "prudent" and "focused." 
+Understood?
+
+ALL: (nods)
+
+MARCUS: One more thing. I'm hearing rumors that people are interviewing 
+elsewhere. That's their right. But I need to know if any of you are 
+looking. Because if you're not committed, we need to know now.
+
+(Silence)
+
+MARCUS: Good. Let's get back to work.
+
+Meeting ended 10:47 AM.
+
+---
+These notes are confidential and not for distribution.

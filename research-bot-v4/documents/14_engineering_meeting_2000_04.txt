@@ -1,0 +1,137 @@
+VAPORWARE ENGINEERING TEAM MEETING
+April 12, 2000
+Location: Engineering Pit (2nd Floor)
+Attendees: Diana Reeves (CTO), Kevin Park (VP Eng), Team Leads (8),
+Senior Engineers (~25)
+Notes by: Kevin Park
+
+---
+
+DIANA: I'm going to level with you. We're not in a good place.
+
+Enterprise 1.0 is two months late. The market is in freefall. Exec 
+team is talking about layoffs. We need to ship something, soon, or 
+this company may not survive.
+
+I've pushed back on the business for months. I told them we were 
+trying to do too much. I was overruled. But that's water under the 
+bridge. What matters now is execution.
+
+Here's the plan.
+
+ENTERPRISE 1.0 - SURVIVAL SCOPE
+
+We're cutting the scope to the absolute minimum viable product. What 
+ships in June:
+
+SHIPPING:
+- Vapor Connect with 5 adapters: SAP, Oracle ERP, PeopleSoft, Siebel, 
+  flat file. That's it.
+- Vapor Transform for basic data formats: CSV, XML, fixed-width. No 
+  EDI. No COBOL copybooks.
+- Vapor Shield with basic LDAP authentication. No Kerberos. No SSO.
+- Admin console for configuration and monitoring.
+
+NOT SHIPPING (DEFERRED TO 1.1):
+- Vapor Sync (the whole thing)
+- Advanced adapters (MQSeries, CICS, mainframe)
+- Oracle RAC support
+- High-availability clustering
+- VaporScript SDK
+- Performance optimization (we'll address specific issues only)
+
+LISA (Lead, Connect): Diana, customers are expecting Sync. We've 
+demoed it. Sales has promised it.
+
+DIANA: I know. Steve is resetting expectations with customers. We'll 
+position it as a "fast follow" in version 1.1.
+
+LISA: They're going to be pissed.
+
+DIANA: Yes. But pissed customers who have a working product is better 
+than no customers because we never shipped.
+
+AMIT (Lead, Transform): What about the multi-database support? We've 
+been working on MySQL for two months.
+
+KEVIN: Oracle only for 1.0. MySQL goes to 1.1.
+
+AMIT: That's a lot of wasted work.
+
+KEVIN: I know. I'm sorry. We'll use it in 1.1.
+
+DIANA: I want to be clear about something. I'm not blaming this team. 
+You've been asked to do impossible things with impossible timelines. 
+The decisions that got us here were made above your pay grade. I take 
+responsibility for not pushing back harder.
+
+But now we need to focus. Eight weeks. That's what we have. No new 
+features. Bug fixes only. Get the five adapters working reliably. Get 
+Transform handling the common cases without errors. Get the admin 
+console to a point where customers can actually use it without calling 
+support.
+
+Questions?
+
+SAM (Senior, Shield): What happens if we don't ship in June?
+
+DIANA: (pause) I don't know exactly. But I know it's bad. We're 
+burning $5 million a month. Revenue is behind. If we don't have a 
+product to sell, we don't have a company.
+
+SAM: That's terrifying.
+
+DIANA: It is. But I'd rather you know the stakes than pretend 
+everything is fine.
+
+KEVIN: On a practical level, here's what this means for the next 
+eight weeks:
+
+- All hands on deck for Enterprise. Consumer team is being merged in.
+- No time off unless it's an emergency.
+- We're going to war rooms by component. Lisa owns Connect. Amit owns 
+  Transform. Sam owns Shield. I'll coordinate cross-team dependencies.
+- Daily standups at 9 AM. No exceptions.
+- Weekly demos to exec team every Friday.
+
+PRIYA (Senior, Consumer): What happens to VaporWare Personal?
+
+DIANA: On hold. Tyler is... no longer with the company. The consumer 
+team is being reassigned to Enterprise.
+
+PRIYA: So all the work we did...
+
+DIANA: It's not wasted. We'll come back to it. But right now, 
+Enterprise is survival.
+
+(Murmurs throughout the room)
+
+DIANA: I know this is hard. I know some of you joined for the consumer 
+vision. I know some of you are thinking about leaving. I can't stop 
+you. But I can tell you this: if we ship Enterprise 1.0 in June, if 
+we prove that VaporWare works, if we get to cash-flow breakeven—then 
+we have a company. And that company can do amazing things.
+
+The next eight weeks will define whether that happens.
+
+I'm asking you to believe. And to execute.
+
+Can I count on you?
+
+(Silence, then nods)
+
+DIANA: Thank you. Let's get to work.
+
+---
+
+POST-MEETING ACTION ITEMS (Kevin):
+
+1. Consumer team reassignment matrix - due Friday
+2. War room setup for each component - by Monday
+3. Dependency map across components - by Wednesday
+4. First weekly exec demo - next Friday
+5. Talk to HR about burnout support - ASAP
+
+---
+Kevin Park
+VP Engineering

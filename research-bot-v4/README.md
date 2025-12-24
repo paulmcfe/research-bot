@@ -1,37 +1,33 @@
-# ResearchBot v6
+# ResearchBot v4
 
-A multi-agent research assistant built with LangChain 1.0 and LangGraph Supervisor that helps you find and synthesize information from your document collection using coordinated specialist agents with persistent memory.
+An AI-powered research assistant built with LangChain 1.0 and LangGraph that helps you find and synthesize information from your document collection using an agentic RAG (Retrieval Augmented Generation) pipeline.
 
 ## Features
 
-- **Multi-Agent Architecture**: Coordinated team of specialist agents using the Supervisor pattern
-- **Native Memory**: Remembers user research interests, preferences, and conversation context across sessions
-- **Query Analysis**: Dedicated agent for analyzing queries and creating research plans
-- **Document Research**: Specialized agent for searching the knowledge base
-- **Report Writing**: Focused agent for synthesizing findings into coherent responses
-- **Document Indexing**: Load and index text documents (.txt files) into a vector database
-- **Semantic Search**: Find relevant information using natural language queries
+- **Agentic RAG Pipeline**: Multi-stage research workflow with planning, retrieval, synthesis, and reflection
+- **Query Decomposition**: Automatically breaks complex questions into focused sub-questions
+- **Document Indexing**: Load and index text documents (.txt, .md files) into a vector database
+- **Semantic Search**: Find relevant information using natural language queries with context-aware retrieval
 - **Multi-Source Synthesis**: Combines information from multiple sources with proper citations
+- **Self-Reflection**: Evaluates research quality and iteratively improves results
 - **FastAPI Backend**: RESTful API for chat and document indexing
-- **Automatic Indexing**: Documents are indexed automatically at server startup
+- **Web Frontend**: Interactive chat interface for asking research questions
 
 ## Architecture
 
-ResearchBot v6 uses a **LangGraph Supervisor** pattern with four coordinated agents and native memory:
+ResearchBot v4 uses a **LangGraph state machine** with four specialized nodes:
 
-1. **Research Coordinator** (Supervisor): Receives queries, coordinates specialists, manages memory, delivers responses
-2. **Query Analyst** (Worker): Analyzes questions and creates focused research plans
-3. **Document Researcher** (Worker): Searches the knowledge base using the `search_documents` tool
-4. **Report Writer** (Worker): Synthesizes findings into clear, cited responses
+1. **Planning Node**: Analyzes queries and decomposes them into sub-questions
+2. **Retrieval Node**: Searches the vector database for relevant sources
+3. **Synthesis Node**: Combines sources into coherent, cited findings
+4. **Reflection Node**: Evaluates quality and determines if more research is needed
 
 **Tech Stack:**
-- **Backend**: FastAPI + LangChain 1.0 + LangGraph Supervisor
+- **Backend**: FastAPI + LangChain 1.0 + LangGraph
 - **LLM**: OpenAI GPT-5-nano (fast, cost-efficient reasoning model)
 - **Embeddings**: OpenAI text-embedding-3-small
 - **Vector Database**: Qdrant (in-memory for development)
-- **Memory Store**: LangGraph InMemoryStore with semantic search
-- **Multi-Agent**: langgraph-supervisor for agent coordination
-- **Memory Tools**: langmem for memory management
+- **State Machine**: LangGraph for agentic workflow orchestration
 
 ## Prerequisites
 
@@ -193,34 +189,33 @@ research-bot/
 
 ## How It Works
 
-### Multi-Agent Pipeline
+### Agentic RAG Pipeline
 
-ResearchBot v6 processes queries through a coordinated multi-agent workflow:
+ResearchBot v4 processes queries through a multi-stage LangGraph workflow:
 
-1. **Research Coordinator** (Supervisor)
-   - Receives the user's research question
-   - Delegates to specialist agents in sequence
-   - Delivers the final synthesized response
+1. **Planning Stage**
+   - Analyzes the user's query
+   - Decomposes complex questions into focused sub-questions
+   - Example: "Compare themes in Moby-Dick and Alice in Wonderland" → separate queries for each book
 
-2. **Query Analyst**
-   - Analyzes the complexity of the query
-   - For simple questions: confirms direct search is sufficient
-   - For complex questions: breaks them into 2-3 focused sub-questions
-   - Example: "Why did Vapor Labs fail and what lessons were learned?" → separate queries for each aspect
+2. **Retrieval Stage**
+   - Performs semantic search using vector embeddings
+   - Retrieves top-k relevant document chunks for each sub-question
+   - Deduplicates results to avoid redundancy
 
-3. **Document Researcher**
-   - Executes searches against the knowledge base
-   - Uses the `search_documents` tool to retrieve relevant content
-   - Compiles key findings with source references
+3. **Synthesis Stage**
+   - Combines information from multiple sources
+   - Generates coherent findings with proper citations [1], [2], etc.
+   - Acknowledges gaps and conflicts in the source material
 
-4. **Report Writer**
-   - Synthesizes all research findings into a coherent response
-   - Cites sources using [Source 1], [Source 2], etc.
-   - Notes conflicting information and acknowledges gaps
+4. **Reflection Stage**
+   - Evaluates the quality of findings (confidence score 0.0-1.0)
+   - Determines if more research is needed
+   - Can trigger additional retrieval iterations (up to 3 max)
 
 ### Document Processing
 
-1. **Loading**: Text files (.txt) are loaded from the `./documents` directory at startup
+1. **Loading**: Text files (.txt, .md) are loaded from the specified directory
 2. **Chunking**: Documents are split into 1000-character chunks with 200-character overlap
 3. **Embedding**: Each chunk is embedded using `text-embedding-3-small` (1536 dimensions)
 4. **Storage**: Embeddings are stored in an in-memory Qdrant vector database (COSINE distance)
@@ -236,13 +231,10 @@ Once the server is running, access interactive API docs at:
 Key dependencies (see [pyproject.toml](pyproject.toml) for full list):
 
 - `langchain>=0.3.0` - LangChain 1.0 framework
-- `langgraph>=0.2.0` - Graph-based agent orchestration
-- `langgraph-supervisor>=0.0.30` - Multi-agent supervisor pattern
-- `langmem>=0.0.30` - Memory management tools
+- `langgraph>=0.2.0` - State machine for agentic workflows
 - `langchain-openai>=0.2.0` - OpenAI integration
 - `langchain-qdrant>=0.2.0` - Qdrant vector store
 - `langchain-text-splitters>=0.3.0` - Document splitting
-- `langsmith>=0.1.0` - Observability and tracing
 - `qdrant-client>=1.11.0` - Vector database client
 - `fastapi>=0.121.2` - Web framework
 - `openai>=1.0.0` - OpenAI API
@@ -266,7 +258,7 @@ Make sure your `.env` file exists and contains a valid `OPENAI_API_KEY`.
 Ensure you've:
 1. Created the `documents/` directory
 2. Added `.txt` files to it
-3. Restarted the server (documents are indexed automatically at startup)
+3. Called the `/api/index` endpoint to index them
 
 ### Import Errors
 

@@ -1,4 +1,4 @@
-# ResearchBot v6 - FastAPI Backend
+# ResearchBot v5 - FastAPI Backend
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
@@ -10,7 +10,7 @@ from researchbot import ResearchBot
 
 load_dotenv()
 
-# Initialize ResearchBot v6
+# Initialize ResearchBot v5
 bot = ResearchBot()
 
 
@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="ResearchBot API",
     description="Agentic RAG-powered research assistant",
-    version="6.0.0",
+    version="5.0.0",
     lifespan=lifespan
 )
 
@@ -46,7 +46,7 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     reply: str
-    version: str = "6.0"
+    version: str = "5.0"
 
 
 class IndexRequest(BaseModel):
@@ -75,8 +75,8 @@ def root():
     """Health check endpoint."""
     return {
         "status": "ok",
-        "version": "6.0",
-        "description": "ResearchBot v6 - Multi-Agent RAG with LangGraph Supervisor"
+        "version": "5.0",
+        "description": "ResearchBot v5 - Agentic RAG with LangGraph"
     }
 
 
@@ -85,7 +85,7 @@ def chat(request: ChatRequest):
     """
     Send a research query to ResearchBot.
     
-    ResearchBot v6 uses a multi-agent pipeline with:
+    ResearchBot v5 uses an agentic RAG pipeline with:
     - Query planning and decomposition
     - Dynamic retrieval from the knowledge base
     - Multi-source synthesis with citations
@@ -93,7 +93,7 @@ def chat(request: ChatRequest):
     """
     try:
         response = bot.research(request.message)
-        return {"reply": response, "version": "6.0"}
+        return {"reply": response, "version": "5.0"}
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -129,7 +129,7 @@ def health_check():
     """Detailed health check for ResearchBot v3."""
     return {
         "status": "healthy",
-        "version": "6.0",
+        "version": "5.0",
         "features": [
             "Query planning and decomposition",
             "Dynamic retrieval strategies",

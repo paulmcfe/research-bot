@@ -1,0 +1,125 @@
+VAPORWARE TECHNICAL ARCHITECTURE
+Version: 1.0
+Author: Diana Reeves, CTO
+Date: April 28, 1999
+Status: APPROVED
+
+OVERVIEW
+
+This document describes the technical architecture for VaporWare 1.0. 
+This architecture supports the enterprise middleware use cases defined 
+in the Product Vision document.
+
+DESIGN PRINCIPLES
+
+1. UNIX-FIRST
+   All components are designed for Solaris and Linux. We do not support 
+   Windows NT. Enterprise customers run real operating systems.
+
+2. JAVA-CORE
+   The platform is written in Java 1.2 for portability and developer 
+   productivity. Performance-critical components may be implemented in 
+   C++ with JNI bindings.
+
+3. ORACLE-BACKED
+   Oracle 8i is our database platform. We leverage Oracle's clustering, 
+   replication, and recovery capabilities. No other databases are 
+   supported in 1.0.
+
+4. CORBA-CONNECTED
+   Component communication uses CORBA (Common Object Request Broker 
+   Architecture). We're evaluating IIOP for internet-facing interfaces.
+
+COMPONENT ARCHITECTURE
+
+[See attached diagram: vaporware_architecture_v1.png]
+
+VAPOR ENGINE (Core)
+- Request Router: Distributes incoming requests across processing nodes
+- Transaction Manager: Ensures ACID compliance across distributed operations
+- Cache Layer: In-memory caching using proprietary VaporCache technology
+- Persistence Layer: Oracle 8i with custom ORM
+
+VAPOR CONNECT (Integration)
+- Adapter Framework: Pluggable adapters for each target system
+- Protocol Handlers: Support for HTTP, FTP, MQSeries, CICS
+- Adapter SDK: Allows customers to build custom adapters using VaporScript
+
+VAPOR TRANSFORM (Data)
+- Schema Registry: Central repository of data formats
+- Transformation Engine: Rule-based transformation with XSLT support
+- Validation Framework: Ensures data integrity during transformation
+
+VAPOR SYNC (Replication)
+- Coherence Protocol: Proprietary algorithm for distributed consensus
+- Conflict Resolution: Configurable strategies for handling conflicts
+- Audit Log: Complete history of all synchronization events
+
+VAPOR SHIELD (Security)
+- Authentication: LDAP integration, support for Kerberos
+- Authorization: Role-based access control with fine-grained permissions
+- Encryption: 128-bit SSL for transport, DES for data at rest
+
+SCALABILITY
+
+VaporWare is designed to scale horizontally. Adding capacity is as simple 
+as adding servers to the cluster. Our architecture supports:
+
+- Up to 64 processing nodes per cluster
+- Up to 10,000 concurrent connections per node
+- Up to 50,000 transactions per second per cluster
+
+DEPLOYMENT TOPOLOGY
+
+Minimum production deployment:
+- 3 application server nodes (Sun Enterprise 450 or equivalent)
+- 2 database server nodes (Oracle RAC)
+- 1 administration console server
+- Hardware load balancer (F5 BigIP recommended)
+
+DEVELOPMENT ENVIRONMENT
+
+Engineers should use:
+- Sun Ultra 10 workstation (or equivalent)
+- Solaris 7 or Red Hat Linux 6.0
+- Oracle 8i Personal Edition
+- Forte for Java IDE
+- CVS for version control
+
+CODE ORGANIZATION
+
+/vapor
+  /engine         - Core platform components
+  /connect        - Integration adapters
+  /transform      - Data transformation
+  /sync           - Replication and sync
+  /shield         - Security components
+  /admin          - Administration console
+  /sdk            - Developer SDK
+  /tests          - Test suites
+  /docs           - Technical documentation
+
+BUILD AND RELEASE
+
+We use Apache Ant for builds. Release process:
+1. Code freeze on Monday
+2. QA testing Tuesday-Thursday
+3. Release candidate Friday
+4. Production release following Monday
+
+Version numbering: major.minor.patch (e.g., 1.0.0)
+
+OPEN ISSUES
+
+1. Should we add XML-RPC support in addition to CORBA? Some newer 
+   startups are adopting this lighter-weight approach.
+
+2. Java performance remains a concern. Latest benchmarks show we're 
+   3x slower than C++ alternatives. Evaluating JIT compilers.
+
+3. Oracle licensing costs are significant. Should we consider supporting 
+   PostgreSQL for smaller deployments?
+
+---
+Diana Reeves
+CTO, Vapor Labs

@@ -26,6 +26,3 @@ qdrant-client>=1.11.0
 
 # LLM Provider
 openai>=1.0.0
-
-# Development
-jupyter
